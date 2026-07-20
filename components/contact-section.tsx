@@ -23,10 +23,13 @@ export function ContactSection() {
       return;
     }
     setState('submitting');
-    // Netlify Forms: POST url-encoded body to `/` with `form-name` set
-    // to the schema declared in `public/__forms.html`. Submissions land
-    // in the Netlify UI under Forms → contact. Locally this 404s — that
-    // is expected; the form only works on the deployed site.
+    // Netlify Forms: POST url-encoded body to the static `/__forms.html`
+    // registry page. POSTing to `/` gets swallowed by next-intl's proxy
+    // (rewrites into the /uz locale) before Netlify's form handler can
+    // intercept it — the static-file path skips the proxy entirely and
+    // hands the request straight to Netlify's forms edge worker.
+    // Submissions land in the Netlify UI under Forms → contact. Locally
+    // this 404s — expected; the form only works on the deployed site.
     const body = new URLSearchParams({
       'form-name': 'contact',
       'bot-field': '',
@@ -35,7 +38,7 @@ export function ContactSection() {
       message,
     }).toString();
     try {
-      const res = await fetch('/', {
+      const res = await fetch('/__forms.html', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body,
