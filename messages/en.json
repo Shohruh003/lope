@@ -1,0 +1,162 @@
+{
+  "meta": {
+    "title": "Lope — Building the future, today",
+    "description": "Lope is a modern IT company from Uzbekistan. One brand, many products: online booking, commerce, and future digital solutions."
+  },
+  "nav": {
+    "home": "Home",
+    "about": "Company",
+    "projects": "Projects",
+    "style": "Lope Style",
+    "store": "Lope Store",
+    "contact": "Contact"
+  },
+  "hero": {
+    "eyebrow": "IT company · Uzbekistan",
+    "titleLine1": "Building",
+    "titleLine2": "the future, today",
+    "subtitle": "Lope is a single brand uniting several modern digital products. Every project is built to make daily life easier.",
+    "ctaPrimary": "Our projects",
+    "ctaSecondary": "About the company"
+  },
+  "about": {
+    "eyebrow": "Who we are",
+    "title": "One brand, many possibilities",
+    "body": "Lope is a young IT company born in Uzbekistan. Our goal is to deliver fast, high-quality, useful digital services to people every day. Each Lope product is crafted with the same professional standard and lives inside a shared ecosystem.",
+    "stats": {
+      "products": "Active products",
+      "users": "Active users",
+      "country": "Headquarters"
+    }
+  },
+  "values": {
+    "eyebrow": "Our values",
+    "title": "Why Lope?",
+    "items": {
+      "innovation": {
+        "title": "Innovation",
+        "body": "We build with the most modern technologies — creating products before users even ask for them."
+      },
+      "reliability": {
+        "title": "Reliability",
+        "body": "Every product is stable and secure — users fully trust the Lope brand."
+      },
+      "local": {
+        "title": "Local",
+        "body": "Uzbek team, local market, services built in the local language."
+      },
+      "design": {
+        "title": "Craft design",
+        "body": "World-class UX/UI — user experience always comes first."
+      }
+    }
+  },
+  "projects": {
+    "eyebrow": "Our products",
+    "title": "The Lope family",
+    "subtitle": "Different domains, one bar of quality. Each project is a distinct part of the Lope brand.",
+    "style": {
+      "tag": "Live",
+      "title": "Lope Style",
+      "subtitle": "Booking platform for barbershops",
+      "description": "Customers book online, barbers send SMS reminders. Used by 100+ barbershops across Uzbekistan.",
+      "cta": "Learn more"
+    },
+    "store": {
+      "tag": "Coming soon",
+      "title": "Lope Store",
+      "subtitle": "Fashion and apparel commerce",
+      "description": "A modern online store — brands, marketplace, and fast delivery. Preparing to launch.",
+      "cta": "Notify me"
+    },
+    "future": {
+      "tag": "In planning",
+      "title": "Next Lope project",
+      "subtitle": "A future product",
+      "description": "New 'Lope +' projects are in the pipeline — food, tech and more."
+    }
+  },
+  "style": {
+    "hero": {
+      "eyebrow": "Project #1",
+      "title": "Lope Style — barbershops online",
+      "subtitle": "Booking for the customer. SMS for the barber. Management panel for the owner.",
+      "downloadAndroid": "Download for Android",
+      "downloadIos": "Download for iOS",
+      "website": "lopestyle.uz"
+    },
+    "features": {
+      "title": "What's inside",
+      "items": {
+        "booking": {
+          "title": "Online booking",
+          "body": "The customer picks a master, picks a time and confirms — no waiting."
+        },
+        "sms": {
+          "title": "Automatic SMS",
+          "body": "Confirmation, reminder, cancellation — all automatic."
+        },
+        "panel": {
+          "title": "Salon panel",
+          "body": "Admins see clients, revenue and stats in real time."
+        },
+        "payments": {
+          "title": "Balance & payments",
+          "body": "Top-up via Click and Payme, SMS spend is calculated automatically."
+        }
+      }
+    }
+  },
+  "store": {
+    "hero": {
+      "eyebrow": "Project #2 · Coming soon",
+      "title": "Lope Store",
+      "subtitle": "A modern fashion and apparel marketplace. Brands, fast delivery, and the Lope quality guarantee.",
+      "cta": "Notify me at launch"
+    },
+    "waitlist": {
+      "placeholder": "Enter your email",
+      "button": "Notify me",
+      "success": "Thanks! We'll let you know when we launch.",
+      "error": "Invalid email. Please try again."
+    }
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "title": "Get in touch",
+    "subtitle": "For questions, partnership or investment — get in touch.",
+    "email": "hello@lope.uz",
+    "phone": "+998 XX XXX XX XX",
+    "address": "Tashkent, Uzbekistan",
+    "form": {
+      "name": "Your name",
+      "email": "Email",
+      "message": "Your message",
+      "submit": "Send",
+      "success": "Your message has been sent. We'll get back to you soon.",
+      "error": "Something went wrong. Please try again."
+    }
+  },
+  "footer": {
+    "tagline": "Building the future, today",
+    "sections": {
+      "company": "Company",
+      "products": "Products",
+      "legal": "Legal"
+    },
+    "links": {
+      "about": "About us",
+      "careers": "Careers",
+      "press": "Press",
+      "privacy": "Privacy policy",
+      "terms": "Terms of use"
+    },
+    "copyright": "© 2026 Lope. All rights reserved."
+  },
+  "language": "Language",
+  "common": {
+    "readMore": "Read more",
+    "learnMore": "Learn more",
+    "getStarted": "Get started"
+  }
+}

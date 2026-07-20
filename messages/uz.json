@@ -1,0 +1,162 @@
+{
+  "meta": {
+    "title": "Lope — Kelajakni bugundan quramiz",
+    "description": "Lope — O'zbekistondagi zamonaviy IT kompaniya. Yagona brend, ko'p mahsulotlar: bron qilish, savdo, kelajakdagi raqamli yechimlar."
+  },
+  "nav": {
+    "home": "Bosh sahifa",
+    "about": "Kompaniya",
+    "projects": "Loyihalar",
+    "style": "Lope Style",
+    "store": "Lope Store",
+    "contact": "Bog'lanish"
+  },
+  "hero": {
+    "eyebrow": "IT kompaniya · O'zbekiston",
+    "titleLine1": "Kelajakni",
+    "titleLine2": "bugundan quramiz",
+    "subtitle": "Lope — bir nechta zamonaviy raqamli mahsulotlarni birlashtiruvchi yagona brend. Har bir loyiha — hayotni osonlashtirish uchun ishlab chiqilgan.",
+    "ctaPrimary": "Loyihalarimiz",
+    "ctaSecondary": "Kompaniya haqida"
+  },
+  "about": {
+    "eyebrow": "Biz kimmiz",
+    "title": "Bitta brend, ko'p imkoniyat",
+    "body": "Lope — bu O'zbekistonda tug'ilgan yosh IT kompaniya. Bizning maqsadimiz — insonlarga kundalik hayotda foydali, tez va sifatli raqamli xizmatlar taqdim etish. Har bir 'Lope' mahsuloti bir xil professional darajada ishlab chiqiladi va bitta ekosistemaga birlashtiriladi.",
+    "stats": {
+      "products": "Ishlab turgan mahsulotlar",
+      "users": "Faol foydalanuvchilar",
+      "country": "Bosh idora"
+    }
+  },
+  "values": {
+    "eyebrow": "Bizning qadriyatlarimiz",
+    "title": "Nima uchun Lope?",
+    "items": {
+      "innovation": {
+        "title": "Innovatsiya",
+        "body": "Eng zamonaviy texnologiyalar bilan mahsulotlarni oldindan yaratamiz — mijozlar so'ramasidan avval."
+      },
+      "reliability": {
+        "title": "Ishonchlilik",
+        "body": "Har bir mahsulot barqaror va xavfsiz — foydalanuvchilar Lope brendiga to'liq ishonadi."
+      },
+      "local": {
+        "title": "Mahalliy",
+        "body": "O'zbekistonlik jamoa, mahalliy bozor uchun mahalliy tilda yaratilgan xizmatlar."
+      },
+      "design": {
+        "title": "Sifatli dizayn",
+        "body": "Xalqaro darajadagi UX/UI — foydalanuvchi tajribasi birinchi o'rinda."
+      }
+    }
+  },
+  "projects": {
+    "eyebrow": "Mahsulotlarimiz",
+    "title": "Lope oilasi",
+    "subtitle": "Har xil sohalar, bitta darajali sifat. Har bir loyiha — Lope brendining alohida qismi.",
+    "style": {
+      "tag": "Ishlab turibdi",
+      "title": "Lope Style",
+      "subtitle": "Sartaroshxonalar uchun bron platformasi",
+      "description": "Mijozlar onlayn bron qiladi, sartaroshlar SMS orqali eslatma yuboradi. O'zbekistonda 100+ sartaroshxona ishlatadi.",
+      "cta": "Batafsil"
+    },
+    "store": {
+      "tag": "Yaqin orada",
+      "title": "Lope Store",
+      "subtitle": "Kiyim-kechak va moda savdosi",
+      "description": "Zamonaviy onlayn do'kon — brendlar, marketplace va tez yetkazish. Ishga tushish arafasida.",
+      "cta": "Xabar berish"
+    },
+    "future": {
+      "tag": "Reja",
+      "title": "Yangi Lope loyiha",
+      "subtitle": "Kelajakdagi mahsulot",
+      "description": "Yangi 'Lope +' loyihalar rejalashtirilyapti — food, tech va boshqa yo'nalishlarda."
+    }
+  },
+  "style": {
+    "hero": {
+      "eyebrow": "Loyiha #1",
+      "title": "Lope Style — sartaroshxona onlayn",
+      "subtitle": "Mijoz uchun bron. Sartarosh uchun SMS. Salon egasi uchun boshqaruv paneli.",
+      "downloadAndroid": "Android'da yuklab olish",
+      "downloadIos": "iOS'da yuklab olish",
+      "website": "lopestyle.uz"
+    },
+    "features": {
+      "title": "Nimalarni qamrab oladi?",
+      "items": {
+        "booking": {
+          "title": "Onlayn bron",
+          "body": "Mijoz masterni tanlaydi, vaqt tanlaydi, tasdiqlashda kutmaydi."
+        },
+        "sms": {
+          "title": "Avtomatik SMS",
+          "body": "Yozilishi, eslatma, bekor qilish — hammasi avtomatik."
+        },
+        "panel": {
+          "title": "Salon paneli",
+          "body": "Adminlar mijozlar, tushum, statistikani real vaqtda kuzatadi."
+        },
+        "payments": {
+          "title": "Balans va to'lov",
+          "body": "Click va Payme orqali balans to'ldirish, SMS xarajatlari avtomatik hisoblanadi."
+        }
+      }
+    }
+  },
+  "store": {
+    "hero": {
+      "eyebrow": "Loyiha #2 · Yaqin orada",
+      "title": "Lope Store",
+      "subtitle": "Zamonaviy moda va kiyim-kechak marketplace'i. Brendlar, tez yetkazish, va Lope sifat kafolati.",
+      "cta": "Ishga tushishida xabar bering"
+    },
+    "waitlist": {
+      "placeholder": "Email manzilingizni kiriting",
+      "button": "Xabar berish",
+      "success": "Rahmat! Ishga tushishimiz bilan xabar beramiz.",
+      "error": "Email noto'g'ri. Iltimos, qaytadan urinib ko'ring."
+    }
+  },
+  "contact": {
+    "eyebrow": "Bog'lanish",
+    "title": "Aloqa qiling",
+    "subtitle": "Savol, hamkorlik yoki investitsiya bo'yicha — biz bilan bog'laning.",
+    "email": "hello@lope.uz",
+    "phone": "+998 XX XXX XX XX",
+    "address": "Toshkent, O'zbekiston",
+    "form": {
+      "name": "Ismingiz",
+      "email": "Email",
+      "message": "Xabaringiz",
+      "submit": "Yuborish",
+      "success": "Xabaringiz yuborildi. Tez orada javob beramiz.",
+      "error": "Xatolik yuz berdi. Qaytadan urinib ko'ring."
+    }
+  },
+  "footer": {
+    "tagline": "Kelajakni bugundan quramiz",
+    "sections": {
+      "company": "Kompaniya",
+      "products": "Mahsulotlar",
+      "legal": "Huquqiy"
+    },
+    "links": {
+      "about": "Kompaniya haqida",
+      "careers": "Ish o'rinlari",
+      "press": "Matbuot",
+      "privacy": "Maxfiylik siyosati",
+      "terms": "Foydalanish shartlari"
+    },
+    "copyright": "© 2026 Lope. Barcha huquqlar himoyalangan."
+  },
+  "language": "Til",
+  "common": {
+    "readMore": "Batafsil",
+    "learnMore": "Ko'proq bilish",
+    "getStarted": "Boshlash"
+  }
+}
