@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Netlify form registry</title>
+    <meta name="robots" content="noindex" />
+  </head>
+  <body>
+    <!--
+      Static form registry for Netlify Forms.
+      Netlify parses HTML files at deploy time to detect forms; since
+      the actual React contact form is rendered on the client, we
+      declare the form schema here so Netlify accepts submissions.
+      The `bot-field` input is the honeypot: bots fill every field
+      including hidden ones, so submissions with `bot-field` set are
+      silently dropped.
+    -->
+    <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="contact" />
+      <input type="hidden" name="bot-field" />
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <textarea name="message"></textarea>
+    </form>
+  </body>
+</html>

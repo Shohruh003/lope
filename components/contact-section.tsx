@@ -23,13 +23,32 @@ export function ContactSection() {
       return;
     }
     setState('submitting');
-    // TODO: wire to /api/contact or Formspree once endpoint exists.
-    await new Promise((r) => setTimeout(r, 600));
-    console.info('[contact]', { name, email, message });
-    setState('success');
-    setName('');
-    setEmail('');
-    setMessage('');
+    // Netlify Forms: POST url-encoded body to `/` with `form-name` set
+    // to the schema declared in `public/__forms.html`. Submissions land
+    // in the Netlify UI under Forms → contact. Locally this 404s — that
+    // is expected; the form only works on the deployed site.
+    const body = new URLSearchParams({
+      'form-name': 'contact',
+      'bot-field': '',
+      name,
+      email,
+      message,
+    }).toString();
+    try {
+      const res = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body,
+      });
+      if (!res.ok) throw new Error(`status ${res.status}`);
+      setState('success');
+      setName('');
+      setEmail('');
+      setMessage('');
+    } catch (err) {
+      console.error('[contact] submit failed', err);
+      setState('error');
+    }
   }
 
   return (
