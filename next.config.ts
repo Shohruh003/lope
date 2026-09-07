@@ -8,6 +8,25 @@ const nextConfig: NextConfig = {
   // subtle animation / scroll listener leaks show up early.
   reactStrictMode: true,
   devIndicators: false,
+  // R2-fe-hardening-01: xavfsizlik headers. Marketing site kam
+  // xavfli — lekin clickjacking / MIME sniffing / referrer leak
+  // klassik defense-in-depth hardening.
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          { key: 'X-Frame-Options', value: 'DENY' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          {
+            key: 'Permissions-Policy',
+            value: 'camera=(), microphone=(), geolocation=()',
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default withNextIntl(nextConfig);
