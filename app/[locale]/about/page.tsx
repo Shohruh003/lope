@@ -2,6 +2,9 @@ import { setRequestLocale, getTranslations } from 'next-intl/server';
 import type { Metadata } from 'next';
 import { AboutSection } from '@/components/about-section';
 import { ValuesSection } from '@/components/values-section';
+import { LeadershipSection } from '@/components/leadership-section';
+import { CertificatesSection } from '@/components/certificates-section';
+import { CtaBand } from '@/components/cta-band';
 import { buildPageMetadata } from '@/lib/seo';
 
 export async function generateMetadata({
@@ -34,8 +37,11 @@ export default async function AboutPage({
 
   return (
     <>
-      <AboutSection />
+      <AboutSection as="h1" intro />
       <ValuesSection />
+      <LeadershipSection />
+      <CertificatesSection variant="full" />
+      <CtaBand />
     </>
   );
 }

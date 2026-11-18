@@ -1,172 +1,166 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type CSSProperties,
+} from 'react';
 import { Link, usePathname } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
-import { BrandMark } from './brand-mark';
+import { Logo } from './brand-mark';
 import { LanguageSwitcher } from './language-switcher';
+import { lockScroll, unlockScroll } from '@/lib/scroll-lock';
 
-/// Sticky glassy top header. Fades a subtle background in once the
-/// user scrolls > 12px so the hero can breathe at the top. Mobile
-/// nav is a slide-down sheet triggered by the hamburger.
+type NavHref = '/' | '/about' | '/projects' | '/contact';
+
+// Scroll position as an external store: no effect + setState needed, and
+// the server snapshot keeps SSR markup stable ("not scrolled").
+function subscribeScroll(onChange: () => void) {
+  window.addEventListener('scroll', onChange, { passive: true });
+  return () => window.removeEventListener('scroll', onChange);
+}
+const getScrolled = () => window.scrollY > 12;
+const getServerScrolled = () => false;
+
+/// Fixed header. At the top of the page it is transparent; once the page
+/// scrolls a glass "capsule" fades in behind it (opacity/transform only,
+/// so the bar never changes size). A thin CSS scroll-driven progress bar
+/// tracks reading position. On mobile, a full-screen sheet with staggered
+/// links; while it is open the page behind is inert and scroll-locked.
 export function Header() {
   const t = useTranslations('nav');
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const ui = useTranslations('ui');
+  const pathname = usePathname();
+  const scrolled = useSyncExternalStore(subscribeScroll, getScrolled, getServerScrolled);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const toggleRef = useRef<HTMLButtonElement>(null);
 
-  useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 12);
-    handler();
-    window.addEventListener('scroll', handler, { passive: true });
-    return () => window.removeEventListener('scroll', handler);
-  }, []);
-
-  const links = [
+  const links: { href: NavHref; label: string }[] = [
     { href: '/', label: t('home') },
     { href: '/about', label: t('about') },
     { href: '/projects', label: t('projects') },
     { href: '/contact', label: t('contact') },
-  ] as const;
+  ];
+
+  const closeMenu = useCallback((restoreFocus: boolean) => {
+    setMenuOpen(false);
+    if (restoreFocus) toggleRef.current?.focus();
+  }, []);
+
+  // While the sheet is open: lock scroll, make the page behind it inert,
+  // close on Escape or when the viewport grows past the mobile breakpoint.
+  useEffect(() => {
+    if (!menuOpen) return;
+    lockScroll();
+    const background = [document.getElementById('main-content'), document.querySelector('footer')];
+    background.forEach((el) => el?.setAttribute('inert', ''));
+
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') closeMenu(true);
+    };
+    const desktop = window.matchMedia('(min-width: 768px)');
+    const onResize = () => {
+      if (desktop.matches) closeMenu(false);
+    };
+    document.addEventListener('keydown', onKey);
+    desktop.addEventListener('change', onResize);
+
+    return () => {
+      unlockScroll();
+      background.forEach((el) => el?.removeAttribute('inert'));
+      document.removeEventListener('keydown', onKey);
+      desktop.removeEventListener('change', onResize);
+    };
+  }, [menuOpen, closeMenu]);
 
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 transition-colors duration-300 ${
-        scrolled
-          ? 'bg-[color:var(--bg)]/70 backdrop-blur-xl border-b border-[color:var(--border)]'
-          : 'bg-transparent'
-      }`}
+      className="site-header fixed inset-x-0 top-0 z-50"
+      data-scrolled={scrolled}
+      data-menu={menuOpen ? 'open' : 'closed'}
     >
-      <div className="container-page flex items-center justify-between h-16 sm:h-20">
+      <div className="header-surface" aria-hidden="true" />
+      <div className="scroll-progress" aria-hidden="true" />
+
+      <div className="header-bar container-page relative flex h-16 items-center justify-between sm:h-20">
         <Link
           href="/"
-          className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+          className="rounded-full py-2 pr-2 transition-opacity hover:opacity-90"
           aria-label="Lope"
+          onClick={() => closeMenu(false)}
         >
-          <div className="relative">
-            <div className="w-2 h-2 rounded-full bg-[color:var(--accent)] shadow-[0_0_16px_var(--accent-glow)]" />
-          </div>
-          <BrandMark size="sm" />
+          <Logo size="sm" />
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-1">
+        <nav aria-label={ui('mainNav')} className="hidden items-center gap-1 md:flex">
           {links.map((l) => (
-            <NavLink key={l.href} href={l.href}>
+            <Link
+              key={l.href}
+              href={l.href}
+              className="nav-link"
+              aria-current={pathname === l.href ? 'page' : undefined}
+            >
               {l.label}
-            </NavLink>
+            </Link>
           ))}
         </nav>
 
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden items-center gap-3 md:flex">
           <LanguageSwitcher />
         </div>
 
-        {/* Mobile hamburger */}
+        {/* Mobile toggle */}
         <button
-          onClick={() => setMobileOpen((v) => !v)}
-          className="md:hidden w-10 h-10 rounded-md border border-[color:var(--border)] flex items-center justify-center hover:bg-[color:var(--bg-elevated)] transition-colors"
-          aria-label="Menu"
-          aria-expanded={mobileOpen}
+          ref={toggleRef}
+          type="button"
+          onClick={() => setMenuOpen((v) => !v)}
+          className="burger relative h-10 w-10 rounded-full border border-[color:var(--border)] bg-white/[0.03] transition-colors hover:bg-[color:var(--bg-elevated)] md:hidden"
+          aria-label={menuOpen ? ui('menuClose') : ui('menuOpen')}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-menu"
         >
-          <div className="w-4 flex flex-col gap-[3px]">
-            <span
-              className={`h-[1.5px] bg-[color:var(--fg)] transition-transform ${
-                mobileOpen ? 'rotate-45 translate-y-[4.5px]' : ''
-              }`}
-            />
-            <span
-              className={`h-[1.5px] bg-[color:var(--fg)] transition-opacity ${
-                mobileOpen ? 'opacity-0' : ''
-              }`}
-            />
-            <span
-              className={`h-[1.5px] bg-[color:var(--fg)] transition-transform ${
-                mobileOpen ? '-rotate-45 -translate-y-[4.5px]' : ''
-              }`}
-            />
-          </div>
+          <span aria-hidden="true" />
+          <span aria-hidden="true" />
         </button>
       </div>
 
       {/* Mobile menu sheet */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2, ease: 'easeOut' }}
-            className="md:hidden border-t border-[color:var(--border)] bg-[color:var(--bg-soft)]"
-          >
-            <div className="container-page py-6 flex flex-col gap-1">
-              {links.map((l) => (
-                <MobileNavLink
-                  key={l.href}
+      <div
+        id="mobile-menu"
+        className="mobile-menu md:hidden"
+        data-open={menuOpen}
+        inert={!menuOpen}
+      >
+        <nav aria-label={ui('mainNav')} className="container-page flex min-h-full flex-col pb-10">
+          <ul className="flex flex-col">
+            {links.map((l, i) => (
+              <li key={l.href} className="menu-item" style={{ '--i': i } as CSSProperties}>
+                <Link
                   href={l.href}
-                  onClick={() => setMobileOpen(false)}
+                  onClick={() => closeMenu(false)}
+                  aria-current={pathname === l.href ? 'page' : undefined}
+                  className="group flex items-center justify-between border-b border-[color:var(--border)] py-5 font-title text-3xl font-semibold tracking-tight text-[color:var(--fg)] aria-[current=page]:text-[color:var(--accent-ink)]"
                 >
                   {l.label}
-                </MobileNavLink>
-              ))}
-              <div className="mt-4 pt-4 border-t border-[color:var(--border)]">
-                <LanguageSwitcher variant="inline" />
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                  <span
+                    aria-hidden="true"
+                    className="text-xl text-[color:var(--fg-faint)] transition-transform duration-300 group-hover:translate-x-1"
+                  >
+                    →
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <div className="menu-item mt-8" style={{ '--i': links.length } as CSSProperties}>
+            <LanguageSwitcher variant="inline" />
+          </div>
+        </nav>
+      </div>
     </header>
-  );
-}
-
-function NavLink({
-  href,
-  children,
-}: {
-  href: '/' | '/about' | '/projects' | '/contact';
-  children: React.ReactNode;
-}) {
-  const pathname = usePathname();
-  const active = pathname === href;
-  return (
-    <Link
-      href={href}
-      className={`relative px-3 py-2 text-sm font-medium transition-colors rounded-md ${
-        active
-          ? 'text-[color:var(--fg)]'
-          : 'text-[color:var(--fg-soft)] hover:text-[color:var(--fg)]'
-      }`}
-    >
-      {children}
-      {active && (
-        <motion.span
-          layoutId="nav-underline"
-          className="absolute left-3 right-3 -bottom-0.5 h-[2px] bg-[color:var(--accent)] rounded-full"
-          transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
-        />
-      )}
-    </Link>
-  );
-}
-
-function MobileNavLink({
-  href,
-  children,
-  onClick,
-}: {
-  href: '/' | '/about' | '/projects' | '/contact';
-  children: React.ReactNode;
-  onClick: () => void;
-}) {
-  return (
-    <Link
-      href={href}
-      onClick={onClick}
-      className="flex items-center justify-between py-3 border-b border-[color:var(--border)] last:border-0 text-lg font-medium text-[color:var(--fg)] hover:text-[color:var(--accent)] transition-colors"
-    >
-      {children}
-      <span className="text-[color:var(--fg-faint)]">→</span>
-    </Link>
   );
 }

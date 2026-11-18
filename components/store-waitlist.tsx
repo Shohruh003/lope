@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useId, useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { ArrowRightIcon, CheckIcon } from './icons';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -13,6 +13,7 @@ export function StoreWaitlist() {
   const t = useTranslations('store.waitlist');
   const [email, setEmail] = useState('');
   const [state, setState] = useState<'idle' | 'success' | 'error'>('idle');
+  const statusId = useId();
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -26,7 +27,10 @@ export function StoreWaitlist() {
 
   return (
     <form onSubmit={onSubmit} className="w-full">
-      <div className="flex flex-col sm:flex-row gap-2">
+      <div
+        className="beam-border relative flex flex-col gap-2 rounded-[28px] border border-[rgba(216,180,254,0.18)] bg-[rgba(14,10,18,0.75)] p-2 shadow-[0_30px_80px_-30px_rgba(192,132,252,0.55)] backdrop-blur transition-[border-color,box-shadow] focus-within:border-[rgba(216,180,254,0.55)] focus-within:ring-2 focus-within:ring-[rgba(216,180,254,0.45)] sm:flex-row sm:rounded-full"
+        style={{ '--beam': 'var(--store-ink)' } as React.CSSProperties}
+      >
         <input
           type="email"
           required
@@ -36,41 +40,34 @@ export function StoreWaitlist() {
             if (state !== 'idle') setState('idle');
           }}
           placeholder={t('placeholder')}
-          className="flex-1 h-12 px-4 rounded-full bg-[color:var(--bg-soft)] border border-[color:var(--border)] text-sm text-[color:var(--fg)] placeholder:text-[color:var(--fg-muted)] focus:outline-none focus:border-[color:var(--fg)] transition-colors"
           aria-label={t('placeholder')}
+          aria-describedby={statusId}
+          aria-invalid={state === 'error' ? true : undefined}
+          autoComplete="email"
+          className="h-12 flex-1 rounded-full bg-transparent px-5 text-sm text-[color:var(--fg)] placeholder:text-[color:var(--fg-muted)] focus:outline-none"
         />
         <button
           type="submit"
-          className="h-12 px-6 rounded-full bg-[color:var(--fg)] text-[color:var(--bg)] text-sm font-semibold hover:bg-[color:var(--fg-soft)] transition-colors whitespace-nowrap"
+          className="btn h-12 bg-[color:var(--fg)] px-6 text-[color:var(--bg)] hover:bg-white"
         >
+          {state === 'success' ? <CheckIcon size={16} /> : null}
           {t('button')}
+          {state !== 'success' && <ArrowRightIcon size={16} className="btn-arrow" />}
         </button>
       </div>
 
-      <AnimatePresence mode="wait">
+      <p id={statusId} role="status" aria-live="polite" className="mt-3 min-h-5 text-sm">
         {state === 'success' && (
-          <motion.p
-            key="success"
-            initial={{ opacity: 0, y: -6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            className="mt-3 text-sm text-green-400"
-          >
+          <span key="success" data-intro="fade" className="text-[color:var(--success)]">
             {t('success')}
-          </motion.p>
+          </span>
         )}
         {state === 'error' && (
-          <motion.p
-            key="error"
-            initial={{ opacity: 0, y: -6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            className="mt-3 text-sm text-red-400"
-          >
+          <span key="error" data-intro="fade" className="text-[color:var(--danger)]">
             {t('error')}
-          </motion.p>
+          </span>
         )}
-      </AnimatePresence>
+      </p>
     </form>
   );
 }

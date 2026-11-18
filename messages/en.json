@@ -26,7 +26,8 @@
     "stats": {
       "products": "Active products",
       "users": "Active users",
-      "country": "Headquarters"
+      "country": "Headquarters",
+      "countryValue": "Uzbekistan"
     }
   },
   "values": {
@@ -135,6 +136,11 @@
       "submit": "Send",
       "success": "Your message has been sent. We'll get back to you soon.",
       "error": "Something went wrong. Please try again."
+    },
+    "labels": {
+      "email": "Email",
+      "phone": "Phone",
+      "address": "Address"
     }
   },
   "footer": {
@@ -156,7 +162,8 @@
       "name": "\"LOPE\" Limited Liability Company",
       "tin": "TIN",
       "address": "Legal address",
-      "phone": "Phone"
+      "phone": "Phone",
+      "heading": "Company details"
     }
   },
   "language": "Language",
@@ -164,5 +171,64 @@
     "readMore": "Read more",
     "learnMore": "Learn more",
     "getStarted": "Get started"
+  },
+  "ui": {
+    "skipToContent": "Skip to main content",
+    "mainNav": "Main navigation",
+    "menuOpen": "Open menu",
+    "menuClose": "Close menu",
+    "backToTop": "Back to top",
+    "pauseAnimation": "Pause the scrolling ticker"
+  },
+  "leadership": {
+    "eyebrow": "Team",
+    "title": "Leadership",
+    "person": {
+      "name": "Shoxruxbek Azimov",
+      "role": "Founder & Director",
+      "bio": "Leads the company's strategy and product development. A developer who took the Lope Style platform from idea to launch.",
+      "photoAlt": "Shoxruxbek Azimov, Founder & Director of \"LOPE\" LLC"
+    }
+  },
+  "certificates": {
+    "eyebrow": "Transparency",
+    "title": "Certificates & documents",
+    "subtitle": "\"LOPE\" LLC is a state-registered legal entity. Select a document to view it in full size.",
+    "teaser": "Documents confirming our company's official registration.",
+    "viewAll": "All documents",
+    "open": "View",
+    "meta": {
+      "date": "Date",
+      "number": "No.",
+      "issuer": "Issued by"
+    },
+    "items": {
+      "registration": {
+        "title": "Certificate of state registration of a legal entity"
+      },
+      "businessRegistration": {
+        "title": "“Business Registration – 2026” certificate",
+        "issuer": "National Statistics Committee of the Republic of Uzbekistan"
+      }
+    },
+    "lightbox": {
+      "close": "Close",
+      "zoomIn": "Zoom in",
+      "fit": "Fit to screen",
+      "prev": "Previous document",
+      "next": "Next document"
+    }
+  },
+  "partners": {
+    "eyebrow": "Partnership",
+    "title": "Our partners",
+    "subtitle": "Payments are accepted through trusted payment systems under official agreements.",
+    "roles": {
+      "payment": "Payment system"
+    },
+    "cta": {
+      "title": "Want to partner with us?",
+      "body": "Get in touch with a partnership proposal."
+    }
   }
 }

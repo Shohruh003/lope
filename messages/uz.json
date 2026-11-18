@@ -26,7 +26,8 @@
     "stats": {
       "products": "Ishlab turgan mahsulotlar",
       "users": "Faol foydalanuvchilar",
-      "country": "Bosh idora"
+      "country": "Bosh idora",
+      "countryValue": "O'zbekiston"
     }
   },
   "values": {
@@ -135,6 +136,11 @@
       "submit": "Yuborish",
       "success": "Xabaringiz yuborildi. Tez orada javob beramiz.",
       "error": "Xatolik yuz berdi. Qaytadan urinib ko'ring."
+    },
+    "labels": {
+      "email": "Email",
+      "phone": "Telefon",
+      "address": "Manzil"
     }
   },
   "footer": {
@@ -156,7 +162,8 @@
       "name": "\"LOPE\" mas'uliyati cheklangan jamiyati",
       "tin": "STIR",
       "address": "Yuridik manzil",
-      "phone": "Tel."
+      "phone": "Tel.",
+      "heading": "Rekvizitlar"
     }
   },
   "language": "Til",
@@ -164,5 +171,64 @@
     "readMore": "Batafsil",
     "learnMore": "Ko'proq bilish",
     "getStarted": "Boshlash"
+  },
+  "ui": {
+    "skipToContent": "Asosiy mazmunga o'tish",
+    "mainNav": "Asosiy menyu",
+    "menuOpen": "Menyuni ochish",
+    "menuClose": "Menyuni yopish",
+    "backToTop": "Yuqoriga",
+    "pauseAnimation": "Harakatlanuvchi yozuvni to'xtatish"
+  },
+  "leadership": {
+    "eyebrow": "Jamoa",
+    "title": "Rahbariyat",
+    "person": {
+      "name": "Shoxruxbek Azimov",
+      "role": "Asoschi va direktor",
+      "bio": "Kompaniya strategiyasi va mahsulotlar rivojini boshqaradi. Lope Style platformasini g'oyadan ishga tushirishgacha olib borgan dasturchi.",
+      "photoAlt": "Shoxruxbek Azimov — \"LOPE\" MChJ asoschisi va direktori"
+    }
+  },
+  "certificates": {
+    "eyebrow": "Shaffoflik",
+    "title": "Sertifikatlar va hujjatlar",
+    "subtitle": "\"LOPE\" MChJ davlat ro'yxatidan o'tgan yuridik shaxs. Hujjatni to'liq hajmda ko'rish uchun ustiga bosing.",
+    "teaser": "Kompaniyamiz rasmiy ro'yxatdan o'tganini tasdiqlovchi hujjatlar.",
+    "viewAll": "Barcha hujjatlar",
+    "open": "Ko'rish",
+    "meta": {
+      "date": "Sana",
+      "number": "Raqami",
+      "issuer": "Bergan tashkilot"
+    },
+    "items": {
+      "registration": {
+        "title": "Yuridik shaxsni davlat ro'yxatidan o'tkazilganligi to'g'risidagi guvohnoma"
+      },
+      "businessRegistration": {
+        "title": "\"Biznesni ro'yxatga olish – 2026\" sertifikati",
+        "issuer": "O'zbekiston Respublikasi Milliy statistika qo'mitasi"
+      }
+    },
+    "lightbox": {
+      "close": "Yopish",
+      "zoomIn": "Kattalashtirish",
+      "fit": "Ekranga moslash",
+      "prev": "Oldingi hujjat",
+      "next": "Keyingi hujjat"
+    }
+  },
+  "partners": {
+    "eyebrow": "Hamkorlik",
+    "title": "Hamkorlarimiz",
+    "subtitle": "To'lovlar rasmiy shartnomalar asosida ishonchli to'lov tizimlari orqali qabul qilinadi.",
+    "roles": {
+      "payment": "To'lov tizimi"
+    },
+    "cta": {
+      "title": "Hamkor bo'lmoqchimisiz?",
+      "body": "Hamkorlik takliflari bilan biz bilan bog'laning."
+    }
   }
 }

@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import Lenis from 'lenis';
+import { registerLenis } from '@/lib/scroll-lock';
 
 /// Wraps the page tree in a Lenis smooth-scroll instance.
 ///
@@ -10,8 +11,12 @@ import Lenis from 'lenis';
 /// the scroll container. `duration: 1.15` gives us Apple-like ease
 /// without feeling sluggish. `smoothWheel` handles trackpad + mouse
 /// wheel; touch is left untouched so mobile still feels native.
+/// Smooth scrolling is itself motion, so it is skipped entirely for
+/// visitors who ask for reduced motion.
 export function LenisProvider() {
   useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
     const lenis = new Lenis({
       duration: 1.15,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -19,6 +24,7 @@ export function LenisProvider() {
       wheelMultiplier: 1,
       touchMultiplier: 2,
     });
+    registerLenis(lenis);
 
     let rafId = 0;
     const raf = (time: number) => {
@@ -29,6 +35,7 @@ export function LenisProvider() {
 
     return () => {
       cancelAnimationFrame(rafId);
+      registerLenis(null);
       lenis.destroy();
     };
   }, []);

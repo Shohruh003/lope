@@ -9,6 +9,7 @@ import type { Metadata, Viewport } from 'next';
 
 import { routing } from '@/i18n/routing';
 import { LenisProvider } from '@/components/lenis-provider';
+import { RevealObserver } from '@/components/motion/reveal-observer';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { buildAlternates, organizationJsonLd, websiteJsonLd, SITE_URL, SITE_NAME } from '@/lib/seo';
@@ -121,14 +122,25 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
   preloadFonts(locale);
   const messages = await getMessages();
+  const ui = await getTranslations({ locale, namespace: 'ui' });
 
   return (
     <html
       lang={locale}
       className="antialiased"
+      // Next 16 no longer resets `scroll-behavior: smooth` during route
+      // changes on its own; this attribute opts back in so navigations
+      // jump to the top instantly while in-page anchors stay smooth.
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
-      <body className="min-h-screen flex flex-col bg-[color:var(--bg)] text-[color:var(--fg)]">
+      <body
+        id="top"
+        className="min-h-screen flex flex-col bg-[color:var(--bg)] text-[color:var(--fg)]"
+      >
+        <a href="#main-content" className="skip-link">
+          {ui('skipToContent')}
+        </a>
         {/*
           JSON-LD structured data — Organization + WebSite. Google/Yandex/Bing
           shu ma'lumot bilan Knowledge Panel + sitelinks searchbox chizadi.
@@ -148,8 +160,11 @@ export default async function LocaleLayout({
         />
         <NextIntlClientProvider messages={messages} locale={locale}>
           <LenisProvider />
+          <RevealObserver />
           <Header />
-          <main className="flex-1 pt-16 sm:pt-20">{children}</main>
+          <main id="main-content" tabIndex={-1} className="flex-1 pt-16 outline-none sm:pt-20">
+            {children}
+          </main>
           <Footer />
         </NextIntlClientProvider>
       </body>

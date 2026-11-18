@@ -1,8 +1,7 @@
-'use client';
-
-import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { SectionHeading } from './section-heading';
+import { PointerFx } from './motion/pointer-fx';
+import { reveal } from './motion/motion-props';
 
 const ICONS = {
   innovation: (
@@ -30,58 +29,41 @@ const ICONS = {
   ),
 };
 
-/// Values grid — 4 value cards. Each card: icon + title + body.
-/// Hover state adds a subtle accent glow so mouse users get a
-/// tactile sense of interactivity even though cards are non-linked.
+const KEYS = ['innovation', 'reliability', 'local', 'design'] as const;
+
+/// Values grid — 4 value cards. Each card: index, icon, title, body.
+/// Cards stagger in on scroll; on hover a cursor-following spotlight and
+/// gradient ring light up and the icon tile tips over.
 export function ValuesSection() {
   const t = useTranslations('values');
-  const items: {
-    key: keyof typeof ICONS;
-  }[] = [
-    { key: 'innovation' },
-    { key: 'reliability' },
-    { key: 'local' },
-    { key: 'design' },
-  ];
 
   return (
-    <section id="values" className="container-page py-24 sm:py-32">
-      <SectionHeading
-        eyebrow={t('eyebrow')}
-        title={t('title')}
-        align="center"
-      />
-      <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {items.map((item, i) => (
-          <motion.div
-            key={item.key}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{
-              duration: 0.6,
-              delay: i * 0.08,
-              ease: [0.16, 1, 0.3, 1],
-            }}
-            className="group relative overflow-hidden rounded-2xl border border-[color:var(--border)] bg-[color:var(--bg-soft)] p-6 hover:border-[color:var(--accent)]/50 hover:bg-[color:var(--bg-elevated)] transition-all"
-          >
-            {/* Accent glow on hover */}
-            <div className="pointer-events-none absolute -top-24 -right-24 w-48 h-48 bg-[color:var(--accent)] opacity-0 blur-3xl group-hover:opacity-30 transition-opacity duration-500" />
-
-            <div className="relative">
-              <div className="w-11 h-11 rounded-xl bg-[color:var(--accent-soft)] text-[color:var(--accent)] flex items-center justify-center mb-4">
-                <div className="w-5 h-5">{ICONS[item.key]}</div>
+    <section id="values" className="container-page py-20 sm:py-28">
+      <SectionHeading eyebrow={t('eyebrow')} title={t('title')} align="center" />
+      <PointerFx group className="mt-16 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {KEYS.map((key, i) => (
+          <div key={key} {...reveal(i * 90)}>
+            <article data-fx="" className="card group h-full p-6 sm:p-7">
+              <div className="flex items-start justify-between">
+                <span className="icon-tile">
+                  <span className="block h-5 w-5" aria-hidden="true">
+                    {ICONS[key]}
+                  </span>
+                </span>
+                <span aria-hidden="true" className="font-mono text-xs text-[color:var(--fg-faint)]">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
               </div>
-              <h3 className="text-lg font-semibold mb-2">
-                {t(`items.${item.key}.title`)}
+              <h3 className="mt-7 font-title text-lg font-semibold tracking-tight text-[color:var(--fg)]">
+                {t(`items.${key}.title`)}
               </h3>
-              <p className="text-sm text-[color:var(--fg-soft)] leading-relaxed">
-                {t(`items.${item.key}.body`)}
+              <p className="mt-2 text-sm leading-relaxed text-[color:var(--fg-soft)]">
+                {t(`items.${key}.body`)}
               </p>
-            </div>
-          </motion.div>
+            </article>
+          </div>
         ))}
-      </div>
+      </PointerFx>
     </section>
   );
 }

@@ -8,6 +8,12 @@ const nextConfig: NextConfig = {
   // subtle animation / scroll listener leaks show up early.
   reactStrictMode: true,
   devIndicators: false,
+  // Lets React's <ViewTransition> (app/[locale]/template.tsx) animate
+  // route changes with the browser View Transitions API. Experimental
+  // in Next 16; unsupported browsers just navigate without animation.
+  experimental: {
+    viewTransition: true,
+  },
   // R2-fe-hardening-01: xavfsizlik headers. Marketing site kam
   // xavfli — lekin clickjacking / MIME sniffing / referrer leak
   // klassik defense-in-depth hardening.

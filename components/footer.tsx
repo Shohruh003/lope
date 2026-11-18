@@ -1,6 +1,9 @@
 import { Link } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
-import { BrandMark } from './brand-mark';
+import { Logo } from './brand-mark';
+import { FlagUz } from './flags';
+import { ArrowUpIcon, ExternalIcon, InstagramIcon, TelegramIcon } from './icons';
+import { reveal } from './motion/motion-props';
 
 // Seller identification for "LOPE" MChJ: e-commerce rules, the payment
 // providers (Payme, CLICK) and Meta business verification expect the legal
@@ -19,85 +22,126 @@ const COMPANY_EMAIL = 'hello@lope.uz';
 const PRIVACY_URL = 'https://lopestyle.uz/privacy';
 const TERMS_URL = 'https://lopestyle.uz/terms';
 
-/// Site footer with 4 columns on desktop, stacked on mobile.
-/// Brand column (mark + tagline + socials) plus 3 link groups
-/// (Company, Products, Legal).
+type InternalHref = '/about' | '/contact' | '/style' | '/store';
+
+/// Site footer: brand column (mark + tagline + socials) and 3 link groups
+/// (Company, Products, Legal), then the company's legal details panel,
+/// the copyright row and an oversized fading wordmark.
 export function Footer() {
   const t = useTranslations('footer');
   const nav = useTranslations('nav');
+  const ui = useTranslations('ui');
+  const contact = useTranslations('contact');
 
   return (
-    <footer className="mt-32 border-t border-[color:var(--border)] bg-[color:var(--bg-soft)]">
-      <div className="container-page py-16 sm:py-20">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
+    <footer className="relative mt-12 overflow-hidden border-t border-[color:var(--border)] bg-[color:var(--bg-soft)]">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[color:var(--accent-ink)] to-transparent opacity-70"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-0 h-72 w-[64rem] max-w-[140%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(0,102,255,0.16),transparent)]"
+      />
+
+      <div className="container-page relative pt-16 sm:pt-20">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-12 lg:gap-8">
           {/* Brand */}
-          <div className="lg:col-span-1 sm:col-span-2 lg:pr-8">
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2 mb-4 hover:opacity-80 transition-opacity"
-            >
-              <div className="w-2 h-2 rounded-full bg-[color:var(--accent)]" />
-              <BrandMark size="md" />
+          <div className="col-span-2 sm:col-span-3 lg:col-span-5 lg:pr-10">
+            <Link href="/" className="inline-flex rounded-full py-1 pr-2 transition-opacity hover:opacity-90" aria-label="Lope">
+              <Logo size="md" />
             </Link>
-            <p className="text-sm text-[color:var(--fg-soft)] max-w-xs">
-              {t('tagline')}
-            </p>
-            <div className="flex gap-2 mt-6">
-              <SocialLink
-                href="https://instagram.com/lope.uz"
-                label="Instagram"
-              >
-                <InstagramIcon />
+            <p className="mt-4 max-w-xs text-sm text-[color:var(--fg-soft)]">{t('tagline')}</p>
+            <div className="mt-6 flex gap-2">
+              <SocialLink href="https://instagram.com/lope.uz" label="Instagram">
+                <InstagramIcon size={16} />
               </SocialLink>
               <SocialLink href="https://t.me/lopeuz" label="Telegram">
-                <TelegramIcon />
+                <TelegramIcon size={16} />
               </SocialLink>
             </div>
           </div>
 
           {/* Company */}
-          <FooterColumn title={t('sections.company')}>
+          <FooterColumn title={t('sections.company')} className="lg:col-span-2">
             <FooterLink href="/about">{nav('about')}</FooterLink>
             <FooterLink href="/contact">{nav('contact')}</FooterLink>
           </FooterColumn>
 
           {/* Products */}
-          <FooterColumn title={t('sections.products')}>
+          <FooterColumn title={t('sections.products')} className="lg:col-span-2">
             <FooterLink href="/style">{nav('style')}</FooterLink>
             <FooterLink href="/store">{nav('store')}</FooterLink>
           </FooterColumn>
 
           {/* Legal */}
-          <FooterColumn title={t('sections.legal')}>
+          <FooterColumn title={t('sections.legal')} className="col-span-2 sm:col-span-1 lg:col-span-3">
             <ExternalFooterLink href={PRIVACY_URL}>{t('links.privacy')}</ExternalFooterLink>
             <ExternalFooterLink href={TERMS_URL}>{t('links.terms')}</ExternalFooterLink>
           </FooterColumn>
         </div>
 
-        <div className="mt-16 pt-8 border-t border-[color:var(--border)] text-xs leading-relaxed text-[color:var(--fg-muted)]">
-          <p>
-            <span className="font-medium text-[color:var(--fg-soft)]">{t('legal.name')}</span>
-            {' · '}
-            {t('legal.tin')}: {COMPANY_TIN}
-          </p>
-          <p className="mt-1">
-            {t('legal.address')}: {COMPANY_LEGAL_ADDRESS}
-          </p>
-          <p className="mt-1">
-            {t('legal.phone')}{' '}
-            <a href={`tel:${COMPANY_PHONE_RAW}`} className="hover:text-[color:var(--fg)] transition-colors">
-              {COMPANY_PHONE}
-            </a>
-            {' · '}
-            <a href={`mailto:${COMPANY_EMAIL}`} className="hover:text-[color:var(--fg)] transition-colors">
-              {COMPANY_EMAIL}
-            </a>
-          </p>
-        </div>
+        {/* Legal details — must stay visible (Meta business verification,
+            Payme / CLICK merchant requirements). */}
+        <section
+          aria-labelledby="legal-details"
+          className="mt-14 rounded-3xl border border-[color:var(--border)] bg-[color:var(--bg)]/60 p-5 sm:p-7"
+        >
+          <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
+            <h2 id="legal-details" className="text-sm font-semibold text-[color:var(--fg)]">
+              {t('legal.name')}
+            </h2>
+            <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--fg-muted)]">
+              {t('legal.heading')}
+            </span>
+          </div>
+          <dl className="mt-5 grid grid-cols-1 gap-x-8 gap-y-4 text-sm sm:grid-cols-2 lg:grid-cols-[auto_minmax(0,1fr)_auto_auto]">
+            <LegalItem label={t('legal.tin')}>
+              <span className="font-mono tabular-nums tracking-wide text-[color:var(--fg)]">{COMPANY_TIN}</span>
+            </LegalItem>
+            <LegalItem label={t('legal.address')} className="sm:col-span-2 lg:col-span-1">
+              {COMPANY_LEGAL_ADDRESS}
+            </LegalItem>
+            <LegalItem label={t('legal.phone')}>
+              <a
+                href={`tel:${COMPANY_PHONE_RAW}`}
+                className="whitespace-nowrap transition-colors hover:text-[color:var(--fg)]"
+              >
+                {COMPANY_PHONE}
+              </a>
+            </LegalItem>
+            <LegalItem label={contact('labels.email')}>
+              <a href={`mailto:${COMPANY_EMAIL}`} className="transition-colors hover:text-[color:var(--fg)]">
+                {COMPANY_EMAIL}
+              </a>
+            </LegalItem>
+          </dl>
+        </section>
 
-        <div className="mt-6 flex flex-col sm:flex-row justify-between gap-3 text-xs text-[color:var(--fg-muted)]">
+        <div className="mt-8 flex flex-col gap-4 border-t border-[color:var(--border)] pt-6 text-xs text-[color:var(--fg-muted)] sm:flex-row sm:items-center sm:justify-between">
           <span>{t('copyright')}</span>
-          <span className="tracking-wider uppercase">Made in Uzbekistan</span>
+          <div className="flex items-center justify-between gap-6 sm:justify-end">
+            <span className="inline-flex items-center gap-2 uppercase tracking-wider">
+              <FlagUz className="h-2.5 w-auto rounded-[2px]" />
+              Made in Uzbekistan
+            </span>
+            <a
+              href="#top"
+              className="group inline-flex items-center gap-2 rounded-full border border-[color:var(--border)] px-3 py-1.5 font-medium text-[color:var(--fg-soft)] transition-colors hover:border-[color:var(--border-strong)] hover:text-[color:var(--fg)]"
+            >
+              {ui('backToTop')}
+              <ArrowUpIcon size={14} className="transition-transform duration-300 group-hover:-translate-y-0.5" />
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div aria-hidden="true" className="relative mt-6 select-none overflow-hidden">
+        <div
+          {...reveal(0, 'blur')}
+          className="footer-wordmark -mb-[0.16em] text-center text-[clamp(7rem,30vw,24rem)]"
+        >
+          Lope
         </div>
       </div>
     </footer>
@@ -106,38 +150,33 @@ export function Footer() {
 
 function FooterColumn({
   title,
+  className = '',
   children,
 }: {
   title: string;
+  className?: string;
   children: React.ReactNode;
 }) {
   return (
-    <div>
-      <h3 className="text-xs uppercase tracking-widest text-[color:var(--fg-muted)] mb-4">
+    <div className={className}>
+      <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.16em] text-[color:var(--fg-muted)]">
         {title}
-      </h3>
-      <ul className="space-y-2.5">{children}</ul>
+      </h2>
+      <ul className="space-y-3">{children}</ul>
     </div>
   );
 }
 
-function FooterLink({
-  href,
-  children,
-}: {
-  href: string;
-  children: React.ReactNode;
-}) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const HrefLink: any = Link;
+function FooterLink({ href, children }: { href: InternalHref; children: React.ReactNode }) {
   return (
     <li>
-      <HrefLink
+      <Link
         href={href}
-        className="text-sm text-[color:var(--fg-soft)] hover:text-[color:var(--fg)] transition-colors"
+        className="group inline-flex items-center gap-1.5 text-sm text-[color:var(--fg-soft)] transition-colors hover:text-[color:var(--fg)]"
       >
+        <span className="h-px w-0 bg-[color:var(--accent-ink)] transition-all duration-300 group-hover:w-3" aria-hidden="true" />
         {children}
-      </HrefLink>
+      </Link>
     </li>
   );
 }
@@ -155,11 +194,32 @@ function ExternalFooterLink({
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-sm text-[color:var(--fg-soft)] hover:text-[color:var(--fg)] transition-colors"
+        className="group inline-flex items-center gap-1.5 text-sm text-[color:var(--fg-soft)] transition-colors hover:text-[color:var(--fg)]"
       >
         {children}
+        <ExternalIcon
+          size={13}
+          className="opacity-50 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:opacity-100"
+        />
       </a>
     </li>
+  );
+}
+
+function LegalItem({
+  label,
+  className = '',
+  children,
+}: {
+  label: string;
+  className?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className={className}>
+      <dt className="text-xs text-[color:var(--fg-muted)]">{label}</dt>
+      <dd className="mt-1 leading-relaxed text-[color:var(--fg-soft)]">{children}</dd>
+    </div>
   );
 }
 
@@ -178,27 +238,9 @@ function SocialLink({
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}
-      className="w-9 h-9 flex items-center justify-center rounded-md border border-[color:var(--border)] hover:border-[color:var(--accent)] hover:text-[color:var(--accent)] hover:bg-[color:var(--accent-soft)] transition-all"
+      className="flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--border)] text-[color:var(--fg-soft)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[color:var(--accent)] hover:bg-[color:var(--accent-soft)] hover:text-[color:var(--accent-ink)] hover:shadow-[0_10px_30px_-10px_var(--accent-glow)]"
     >
       {children}
     </a>
-  );
-}
-
-function InstagramIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <rect x="2" y="2" width="20" height="20" rx="5" />
-      <circle cx="12" cy="12" r="4" />
-      <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" />
-    </svg>
-  );
-}
-
-function TelegramIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 2c5.52 0 10 4.48 10 10s-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2zm3.94 7.28L7.7 12.49c-.56.22-.56.55-.1.7l2.1.66 4.87-3.07c.23-.14.44-.06.27.09l-3.94 3.56-.15 2.27c.22 0 .32-.1.44-.22l1.06-1.03 2.2 1.62c.4.22.7.11.8-.38l1.44-6.77c.15-.6-.22-.88-.65-.66z" />
-    </svg>
   );
 }

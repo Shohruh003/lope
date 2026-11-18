@@ -1,92 +1,195 @@
-'use client';
-
-import { motion } from 'framer-motion';
+import type { CSSProperties } from 'react';
 import { useTranslations } from 'next-intl';
+import { Aurora } from './aurora';
+import { AppleIcon, CalendarIcon, CheckIcon, ExternalIcon, PlayStoreIcon } from './icons';
+import { intro } from './motion/motion-props';
 
+/// Lope Style product hero: copy + store buttons on the left, an animated
+/// phone mock-up of the booking flow on the right. Server component; the
+/// entrance is CSS-only.
 export function StyleHero() {
   const t = useTranslations('style.hero');
+  const title = t('title');
+  // "Lope Style — …" in every locale: highlight the product name.
+  const dash = title.indexOf(' — ');
+  const [name, rest] = dash > 0 ? [title.slice(0, dash), title.slice(dash)] : [title, ''];
 
   return (
-    <section className="relative overflow-hidden container-page pt-32 sm:pt-40 pb-20 sm:pb-28">
-      <div className="pointer-events-none absolute inset-0 bg-grid opacity-30" />
-      <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-[720px] h-[720px] rounded-full bg-[color:var(--accent)]/10 blur-3xl" />
+    <section className="relative isolate -mt-16 overflow-hidden pt-16 sm:-mt-20 sm:pt-20">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+        <Aurora />
+        <div className="hero-grid" />
+      </div>
 
-      <div className="relative max-w-4xl mx-auto text-center">
-        <motion.span
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest bg-[color:var(--accent)]/10 text-[color:var(--accent)] border border-[color:var(--accent)]/30"
-        >
-          <span className="w-1.5 h-1.5 rounded-full bg-[color:var(--accent)] animate-pulse" />
-          {t('eyebrow')}
-        </motion.span>
+      <div className="container-page grid grid-cols-1 items-center gap-14 pb-20 pt-14 sm:pb-28 sm:pt-20 lg:grid-cols-12 lg:gap-8">
+        <div className="text-center lg:col-span-7 lg:text-left">
+          <div {...intro(0, 'down')} className="flex justify-center lg:justify-start">
+            <span className="eyebrow">
+              <span className="eyebrow-dot ping" aria-hidden="true" />
+              {t('eyebrow')}
+            </span>
+          </div>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-6 font-[family-name:var(--font-display)] font-bold tracking-tight leading-[1.05] text-[clamp(2.25rem,6vw,4.5rem)]"
-        >
-          {t('title')}
-        </motion.h1>
+          <h1 className="mt-6 font-title font-semibold leading-[1.02] tracking-[-0.035em] text-[clamp(2.4rem,6.4vw,4.75rem)] text-balance">
+            <span className="line-mask">
+              <span className="line" style={{ '--intro-delay': '120ms' } as CSSProperties}>
+                <span className="text-gradient hero-sweep">{name}</span>
+                {rest && <span className="text-gradient-soft">{rest}</span>}
+              </span>
+            </span>
+          </h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-6 text-lg sm:text-xl text-[color:var(--fg-soft)] max-w-2xl mx-auto"
-        >
-          {t('subtitle')}
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3"
-        >
-          <a
-            href="https://play.google.com/store/apps/details?id=uz.barberbook.mobile"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center justify-center gap-2 px-6 h-12 rounded-full bg-[color:var(--fg)] text-[color:var(--bg)] text-sm font-semibold hover:bg-[color:var(--fg-soft)] transition-colors w-full sm:w-auto"
+          <p
+            {...intro(380)}
+            className="mx-auto mt-6 max-w-xl text-lg text-[color:var(--fg-soft)] text-pretty sm:text-xl lg:mx-0"
           >
-            <svg width="18" height="20" viewBox="0 0 18 20" fill="currentColor">
-              <path d="M1.5.5C1 .8.7 1.4.7 2v16c0 .6.3 1.2.8 1.5L10 10 1.5.5zm11.6 5.3L3.4 0l9.7 10-9.7 10 9.7-5.8 3.5-2c1.1-.6 1.1-2.4 0-3l-3.5-2.4z" />
-            </svg>
-            {t('downloadAndroid')}
-          </a>
-          <a
-            href="https://apps.apple.com/app/id0000000000"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center justify-center gap-2 px-6 h-12 rounded-full bg-[color:var(--bg-soft)] text-[color:var(--fg)] text-sm font-semibold border border-[color:var(--border)] hover:border-[color:var(--border-strong)] transition-colors w-full sm:w-auto"
+            {t('subtitle')}
+          </p>
+
+          <div
+            {...intro(520)}
+            className="mt-10 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center lg:justify-start"
           >
-            <svg width="18" height="20" viewBox="0 0 18 20" fill="currentColor">
-              <path d="M14.5 10.6c0-2.5 2-3.7 2.1-3.7-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.2.9-4 2.4-1.7 3-.4 7.4 1.2 9.8.8 1.2 1.8 2.5 3.1 2.4 1.2 0 1.7-.8 3.2-.8s1.9.8 3.2.8c1.3 0 2.2-1.2 3-2.3.9-1.3 1.3-2.6 1.4-2.7-.1 0-2.8-1.1-2.8-4.1zM12.1 3.5c.7-.8 1.1-2 1-3.1-1 0-2.2.7-2.9 1.5-.6.7-1.2 1.9-1 3 1.1.1 2.2-.6 2.9-1.4z" />
-            </svg>
-            {t('downloadIos')}
-          </a>
-          <a
-            href="https://lopestyle.uz"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center justify-center gap-2 px-6 h-12 rounded-full text-sm font-semibold text-[color:var(--fg-soft)] hover:text-[color:var(--fg)] transition-colors w-full sm:w-auto"
-          >
-            {t('website')}
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path
-                d="M5 3h6v6M11 3L3 11"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+            <a
+              href="https://play.google.com/store/apps/details?id=uz.barberbook.mobile"
+              target="_blank"
+              rel="noreferrer"
+              className="btn btn-light h-12 px-6"
+            >
+              <PlayStoreIcon size={17} />
+              {t('downloadAndroid')}
+            </a>
+            <a
+              href="https://apps.apple.com/us/app/lopestyle/id6761615021"
+              target="_blank"
+              rel="noreferrer"
+              className="btn btn-secondary h-12 px-6"
+            >
+              <AppleIcon size={17} />
+              {t('downloadIos')}
+            </a>
+            <a
+              href="https://lopestyle.uz"
+              target="_blank"
+              rel="noreferrer"
+              className="group inline-flex h-12 items-center justify-center gap-2 rounded-full px-5 text-sm font-semibold text-[color:var(--fg-soft)] transition-colors hover:text-[color:var(--fg)]"
+            >
+              {t('website')}
+              <ExternalIcon
+                size={14}
+                className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
               />
-            </svg>
-          </a>
-        </motion.div>
+            </a>
+          </div>
+        </div>
+
+        <div {...intro(300, 'scale')} className="lg:col-span-5">
+          <PhoneMock />
+        </div>
       </div>
     </section>
+  );
+}
+
+/// Decorative phone running a booking flow: a time slot gets picked, the
+/// confirm button glows and an SMS confirmation pops in — on a loop.
+/// Language-neutral: times, digits and skeleton lines only.
+function PhoneMock() {
+  const days = [12, 13, 14, 15, 16];
+  const slots = ['09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '14:00', '15:30', '16:00'];
+
+  return (
+    <div aria-hidden="true" className="relative mx-auto w-[min(300px,82vw)] select-none">
+      <div className="absolute inset-[-12%] -z-10 rounded-full bg-[radial-gradient(closest-side,rgba(0,102,255,0.45),transparent)]" />
+
+      <div className="float-y" style={{ '--dur': '7s' } as CSSProperties}>
+        <div className="rounded-[46px] border border-white/15 bg-[#06070a] p-2.5 shadow-[0_50px_120px_-40px_rgba(0,0,0,1),inset_0_1px_0_rgba(255,255,255,0.08)]">
+          <div className="relative overflow-hidden rounded-[38px] bg-[#0b0d12] px-4 pb-5 pt-3">
+            <div className="mx-auto h-6 w-24 rounded-full bg-black" />
+
+            <div className="mt-4 flex items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-[color:var(--accent)] shadow-[0_0_10px_var(--accent-glow)]" />
+              <span className="h-2 w-16 rounded-full bg-white/20" />
+              <span className="ml-auto h-7 w-7 rounded-full bg-gradient-to-br from-[#5c9dff] to-[#7b61ff]" />
+            </div>
+
+            <div className="mt-5 flex items-center gap-3 rounded-2xl border border-white/8 bg-white/[0.03] p-3">
+              <span className="h-11 w-11 shrink-0 rounded-xl bg-gradient-to-br from-[#2a3550] to-[#141a28]" />
+              <span className="flex-1">
+                <span className="block h-2 w-24 rounded-full bg-white/25" />
+                <span className="mt-2 block h-1.5 w-16 rounded-full bg-white/10" />
+              </span>
+              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[color:var(--accent-soft)] text-[color:var(--accent-ink)]">
+                <CalendarIcon size={14} />
+              </span>
+            </div>
+
+            <div className="mt-4 grid grid-cols-5 gap-1.5">
+              {days.map((d) => (
+                <span
+                  key={d}
+                  className={`flex flex-col items-center rounded-xl border py-2 text-xs font-semibold tabular-nums ${
+                    d === 14
+                      ? 'border-[rgba(92,157,255,0.6)] bg-[color:var(--accent-soft)] text-white'
+                      : 'border-white/8 text-[color:var(--fg-muted)]'
+                  }`}
+                >
+                  <span className="mb-1 h-1 w-3 rounded-full bg-current opacity-40" />
+                  {d}
+                </span>
+              ))}
+            </div>
+
+            <div className="mt-3 grid grid-cols-3 gap-1.5">
+              {slots.map((s, i) => (
+                <span
+                  key={s}
+                  className={`slot py-2 text-center text-[11px] font-medium text-[color:var(--fg-soft)] ${
+                    i === 4 ? 'slot-pick' : ''
+                  } ${i === 1 || i === 6 ? 'opacity-35 line-through' : ''}`}
+                >
+                  {s}
+                </span>
+              ))}
+            </div>
+
+            <div className="mt-4 flex h-11 items-center justify-center gap-2 rounded-2xl bg-[color:var(--accent)] text-white shadow-[0_14px_34px_-12px_rgba(0,102,255,1)]">
+              <CheckIcon size={16} />
+              <span className="h-1.5 w-20 rounded-full bg-white/70" />
+            </div>
+            <div className="mx-auto mt-4 h-1 w-24 rounded-full bg-white/25" />
+          </div>
+        </div>
+      </div>
+
+      {/* SMS confirmation toast */}
+      <div className="toast-pop absolute -left-6 top-[38%] w-52 rounded-2xl border border-white/10 bg-[#11141b]/95 p-3 shadow-[0_24px_60px_-20px_rgba(0,0,0,1)] backdrop-blur sm:-left-16">
+        <div className="flex items-center gap-2">
+          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[color:var(--success)]/15 text-[color:var(--success)]">
+            <CheckIcon size={14} />
+          </span>
+          <span className="text-[10px] font-semibold uppercase tracking-widest text-[color:var(--fg-muted)]">SMS</span>
+          <span className="ml-auto text-[10px] tabular-nums text-[color:var(--fg-faint)]">11:30</span>
+        </div>
+        <span className="mt-2.5 block h-1.5 w-full rounded-full bg-white/15" />
+        <span className="mt-1.5 block h-1.5 w-2/3 rounded-full bg-white/10" />
+      </div>
+
+      {/* Revenue chip */}
+      <div
+        className="float-y absolute -right-4 bottom-[16%] rounded-2xl border border-white/10 bg-[#11141b]/95 p-3 shadow-[0_24px_60px_-20px_rgba(0,0,0,1)] backdrop-blur sm:-right-12"
+        style={{ '--dur': '5.5s', '--delay': '-2s' } as CSSProperties}
+      >
+        <div className="flex h-10 items-end gap-1">
+          {[40, 65, 50, 80, 95].map((h, i) => (
+            <span
+              key={i}
+              className="w-2.5 rounded-sm bg-gradient-to-t from-[color:var(--accent)] to-[#7fb2ff]"
+              style={{ height: `${h}%` }}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }

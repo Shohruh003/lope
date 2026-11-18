@@ -1,126 +1,103 @@
-'use client';
-
-import { motion } from 'framer-motion';
+import type { CSSProperties } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
+import { Aurora } from './aurora';
+import { ArrowRightIcon } from './icons';
+import { intro } from './motion/motion-props';
 
-/// Full-viewport hero section. Big split-line title, subtle grid
-/// background, animated brand dot + text reveal, two CTAs. Reads
-/// premium on both a 320dp phone and a 4K monitor via
-/// clamp()-based typography.
+// Light beams fall along grid lines. The 64px grid is centred, so its
+// lines sit at 50% − 32px ± n·64px.
+const BEAMS = [
+  { left: 'calc(50% - 416px)', dur: '7.5s', delay: '0.6s' },
+  { left: 'calc(50% - 160px)', dur: '9s', delay: '2.8s' },
+  { left: 'calc(50% + 96px)', dur: '6.8s', delay: '1.4s' },
+  { left: 'calc(50% + 352px)', dur: '8.4s', delay: '3.6s' },
+];
+
+/// Full-viewport hero section. Server component: the whole entrance
+/// (eyebrow drop, masked line rise, gradient sweep, CTA fade) is CSS,
+/// so it plays at first paint without waiting for JavaScript. The
+/// backdrop is aurora + masked grid + falling beams + a glowing horizon,
+/// all decorative and transform/opacity-only.
 export function Hero() {
   const t = useTranslations('hero');
 
   return (
-    <section className="relative min-h-[calc(100svh-64px)] sm:min-h-[calc(100svh-80px)] flex items-center overflow-hidden bg-noise">
-      {/* Layered background — grid + accent glow */}
-      <div className="absolute inset-0 bg-grid opacity-40" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vmin] h-[80vmin] rounded-full bg-[color:var(--accent)] opacity-[0.08] blur-[120px] pointer-events-none" />
+    <section className="bg-noise relative isolate -mt-16 flex min-h-[100svh] items-center overflow-hidden pt-16 sm:-mt-20 sm:pt-20">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+        <Aurora />
+        <div className="hero-grid" />
+        {BEAMS.map((b) => (
+          <span
+            key={b.left}
+            className="beam hidden sm:block"
+            style={{ left: b.left, '--dur': b.dur, '--delay': b.delay } as CSSProperties}
+          />
+        ))}
+        <div className="horizon" />
+      </div>
 
-      <div className="container-page relative z-10 py-16 sm:py-24">
+      <div className="container-page relative z-10 pb-32 pt-10 text-center sm:pb-40 sm:pt-14">
         {/* Eyebrow */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="inline-flex items-center gap-2 px-3 py-1.5 mb-8 rounded-full border border-[color:var(--border-strong)] bg-[color:var(--bg-soft)]/50 backdrop-blur"
-        >
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[color:var(--accent)] opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-[color:var(--accent)]" />
+        <div {...intro(0, 'down')} className="flex justify-center">
+          <span className="beam-border relative inline-flex items-center gap-2.5 rounded-full border border-[color:var(--border-strong)] bg-[color:var(--bg-soft)]/60 px-4 py-1.5 backdrop-blur">
+            <span aria-hidden="true" className="ping relative h-2 w-2 rounded-full bg-[color:var(--accent)]" />
+            <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--fg-soft)]">
+              {t('eyebrow')}
+            </span>
           </span>
-          <span className="text-xs uppercase tracking-widest text-[color:var(--fg-soft)]">
-            {t('eyebrow')}
-          </span>
-        </motion.div>
+        </div>
 
-        {/* Title */}
-        <h1 className="font-[family-name:var(--font-display)] font-bold tracking-tighter leading-[0.9]">
-          <motion.div
-            initial={{ opacity: 0, y: 40, filter: 'blur(8px)' }}
-            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-[clamp(2.5rem,10vw,7.5rem)] text-[color:var(--fg)]"
-          >
-            {t('titleLine1')}
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 40, filter: 'blur(8px)' }}
-            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-            transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="text-[clamp(2.5rem,10vw,7.5rem)] text-[color:var(--fg-soft)]"
-          >
-            {t('titleLine2')}
-            <motion.span
-              initial={{ scaleX: 0, opacity: 0 }}
-              animate={{ scaleX: 1, opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.9 }}
-              className="inline-block w-[0.4em] h-[0.09em] ml-3 align-middle bg-[color:var(--accent)] origin-left"
-            />
-          </motion.div>
+        {/* Title — each line rises out of its own mask */}
+        <h1 className="mx-auto mt-8 max-w-6xl font-title font-semibold leading-[0.95] tracking-[-0.045em] text-[clamp(2.75rem,9vw,7rem)] text-balance">
+          <span className="line-mask">
+            <span className="line" style={{ '--intro-delay': '120ms' } as CSSProperties}>
+              {t('titleLine1')}
+            </span>
+          </span>{' '}
+          <span className="line-mask">
+            <span className="line" style={{ '--intro-delay': '260ms' } as CSSProperties}>
+              <span className="text-gradient hero-sweep">{t('titleLine2')}</span>
+              <span
+                aria-hidden="true"
+                className="hero-dash ml-[0.18em] inline-block h-[0.085em] w-[0.42em] rounded-full bg-[color:var(--accent)] align-middle shadow-[0_0_24px_var(--accent-glow)]"
+              />
+            </span>
+          </span>
         </h1>
 
         {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-8 max-w-2xl text-base sm:text-lg text-[color:var(--fg-soft)] leading-relaxed"
+        <p
+          {...intro(520)}
+          className="mx-auto mt-8 max-w-2xl text-base leading-relaxed text-[color:var(--fg-soft)] text-pretty sm:text-lg"
         >
           {t('subtitle')}
-        </motion.p>
+        </p>
 
         {/* CTAs */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-10 flex flex-col sm:flex-row gap-3"
+        <div
+          {...intro(660)}
+          className="mt-10 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center"
         >
-          <Link
-            href="/projects"
-            className="group inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-[color:var(--accent)] text-white text-sm font-semibold hover:bg-[color:var(--accent-hover)] hover:shadow-[0_0_30px_var(--accent-glow)] transition-all"
-          >
+          <Link href="/projects" className="btn btn-primary h-12 px-7">
             {t('ctaPrimary')}
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              className="transition-transform group-hover:translate-x-0.5"
-            >
-              <path
-                d="M6 3l5 5-5 5"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            <ArrowRightIcon size={16} className="btn-arrow" />
           </Link>
-          <Link
-            href="/about"
-            className="inline-flex items-center justify-center px-6 py-3.5 rounded-full border border-[color:var(--border-strong)] text-sm font-semibold hover:bg-[color:var(--bg-elevated)] transition-all"
-          >
+          <Link href="/about" className="btn btn-secondary h-12 px-7">
             {t('ctaSecondary')}
           </Link>
-        </motion.div>
+        </div>
+      </div>
 
-        {/* Scroll hint */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.2 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[color:var(--fg-faint)] pointer-events-none"
-        >
-          <motion.div
-            animate={{ y: [0, 6, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-            className="w-6 h-9 border border-[color:var(--fg-faint)] rounded-full flex items-start justify-center pt-1.5"
-          >
-            <div className="w-0.5 h-2 bg-[color:var(--fg-faint)] rounded-full" />
-          </motion.div>
-        </motion.div>
+      {/* Scroll hint */}
+      <div
+        aria-hidden="true"
+        {...intro(1300, 'fade')}
+        className="pointer-events-none absolute bottom-6 left-1/2 hidden -translate-x-1/2 [@media(min-height:720px)]:block"
+      >
+        <div className="flex h-9 w-6 justify-center rounded-full border border-white/25 pt-1.5">
+          <span className="scroll-wheel h-2 w-0.5 rounded-full bg-white/60" />
+        </div>
       </div>
     </section>
   );

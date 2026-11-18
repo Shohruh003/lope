@@ -1,6 +1,7 @@
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import type { Metadata } from 'next';
 import { ProjectsSection } from '@/components/projects-section';
+import { CtaBand } from '@/components/cta-band';
 import { buildPageMetadata } from '@/lib/seo';
 
 export async function generateMetadata({
@@ -26,5 +27,10 @@ export default async function ProjectsPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  return <ProjectsSection />;
+  return (
+    <>
+      <ProjectsSection as="h1" intro />
+      <CtaBand />
+    </>
+  );
 }
