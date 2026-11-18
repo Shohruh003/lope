@@ -7,6 +7,13 @@
  */
 import type { Metadata } from 'next';
 import { routing } from '@/i18n/routing';
+import {
+  COMPANY_EMAIL,
+  COMPANY_INSTAGRAM,
+  COMPANY_PHONE_RAW,
+  COMPANY_TELEGRAM,
+  COMPANY_TIN,
+} from '@/lib/company';
 
 export const SITE_URL = 'https://lope.uz';
 export const SITE_NAME = 'Lope';
@@ -93,22 +100,25 @@ export function organizationJsonLd() {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: SITE_NAME,
+    legalName: '"LOPE" MChJ',
+    taxID: COMPANY_TIN,
     url: SITE_URL,
     logo: `${SITE_URL}/icon`,
-    sameAs: [
-      // Agar social media akkountlar bo'lsa qo'shing
-      // 'https://instagram.com/lope.uz',
-      // 'https://t.me/lope_uz',
-    ],
+    sameAs: [COMPANY_INSTAGRAM, COMPANY_TELEGRAM],
+    // Legal address from the registration certificate (lib/company.ts).
     address: {
       '@type': 'PostalAddress',
+      streetAddress: "Beshkapa MFY, Paxtaobod ko'chasi, 326-uy",
+      addressLocality: 'Nurafshon, Namangan tumani',
+      addressRegion: 'Namangan viloyati',
       addressCountry: 'UZ',
-      addressLocality: 'Tashkent',
     },
     contactPoint: [
       {
         '@type': 'ContactPoint',
         contactType: 'customer support',
+        telephone: COMPANY_PHONE_RAW,
+        email: COMPANY_EMAIL,
         availableLanguage: ['uz', 'ru', 'en'],
       },
     ],

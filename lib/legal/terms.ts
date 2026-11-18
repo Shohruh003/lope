@@ -90,7 +90,7 @@ export const TERMS: LegalDocuments = {
       {
         id: 'contact',
         title: '10. Aloqa',
-        blocks: ['Shartlar bo\'yicha savollar uchun: hello@lope.uz, +998 94 272 07 05.'],
+        blocks: ['Shartlar bo\'yicha savollar uchun: support@lopestyle.uz, +998 94 272 07 05.'],
       },
     ],
   },
@@ -179,7 +179,7 @@ export const TERMS: LegalDocuments = {
       {
         id: 'contact',
         title: '10. Контакты',
-        blocks: ['По вопросам об Условиях: hello@lope.uz, +998 94 272 07 05.'],
+        blocks: ['По вопросам об Условиях: support@lopestyle.uz, +998 94 272 07 05.'],
       },
     ],
   },
@@ -268,7 +268,7 @@ export const TERMS: LegalDocuments = {
       {
         id: 'contact',
         title: '10. Contact',
-        blocks: ['Questions about these Terms: hello@lope.uz, +998 94 272 07 05.'],
+        blocks: ['Questions about these Terms: support@lopestyle.uz, +998 94 272 07 05.'],
       },
     ],
   },

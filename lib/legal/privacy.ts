@@ -54,7 +54,7 @@ export const PRIVACY: LegalDocuments = {
         title: '4. Qayta ishlashning huquqiy asosi',
         blocks: [
           `Aloqa formasini yuborish orqali siz ma'lumotlaringiz ushbu Siyosatda ko'rsatilgan maqsadlarda qayta ishlanishiga rozilik bildirasiz. Texnik ma'lumotlar Saytning ishlashi va himoyasi uchun zarur bo'lgani sababli qayta ishlanadi.`,
-          `Rozilikni istalgan vaqtda hello@lope.uz manziliga yozib qaytarib olishingiz mumkin. Bu rozilik qaytarib olingunga qadar amalga oshirilgan qayta ishlashning qonuniyligiga ta'sir qilmaydi.`,
+          `Rozilikni istalgan vaqtda support@lopestyle.uz manziliga yozib qaytarib olishingiz mumkin. Bu rozilik qaytarib olingunga qadar amalga oshirilgan qayta ishlashning qonuniyligiga ta'sir qilmaydi.`,
         ],
       },
       {
@@ -98,7 +98,7 @@ export const PRIVACY: LegalDocuments = {
               'huquqlaringiz buzilgan deb hisoblasangiz, vakolatli davlat organiga yoki sudga shikoyat qilish.',
             ],
           },
-          "So'rovlaringizni hello@lope.uz manziliga yuboring. Qonunda belgilangan muddatlarda javob beramiz.",
+          "So'rovlaringizni support@lopestyle.uz manziliga yuboring. Qonunda belgilangan muddatlarda javob beramiz.",
         ],
       },
       {
@@ -112,7 +112,7 @@ export const PRIVACY: LegalDocuments = {
         id: 'contact',
         title: '10. Aloqa',
         blocks: [
-          `Shaxsga doir ma'lumotlar bo'yicha savol va so'rovlar uchun: hello@lope.uz, +998 94 272 07 05.`,
+          `Shaxsga doir ma'lumotlar bo'yicha savol va so'rovlar uchun: support@lopestyle.uz, +998 94 272 07 05.`,
         ],
       },
     ],
@@ -161,7 +161,7 @@ export const PRIVACY: LegalDocuments = {
         title: '4. Правовые основания',
         blocks: [
           'Отправляя форму обратной связи, вы даёте согласие на обработку ваших данных в целях, указанных в настоящей Политике. Технические данные обрабатываются, поскольку это необходимо для работы и защиты Сайта.',
-          'Вы можете в любой момент отозвать согласие, написав на hello@lope.uz. Отзыв согласия не влияет на законность обработки, выполненной до его отзыва.',
+          'Вы можете в любой момент отозвать согласие, написав на support@lopestyle.uz. Отзыв согласия не влияет на законность обработки, выполненной до его отзыва.',
         ],
       },
       {
@@ -205,7 +205,7 @@ export const PRIVACY: LegalDocuments = {
               'обжаловать действия Компании в уполномоченном государственном органе или в суде, если считаете, что ваши права нарушены.',
             ],
           },
-          'Направляйте запросы на hello@lope.uz. Мы ответим в сроки, установленные законодательством.',
+          'Направляйте запросы на support@lopestyle.uz. Мы ответим в сроки, установленные законодательством.',
         ],
       },
       {
@@ -218,7 +218,7 @@ export const PRIVACY: LegalDocuments = {
       {
         id: 'contact',
         title: '10. Контакты',
-        blocks: ['По вопросам, связанным с персональными данными: hello@lope.uz, +998 94 272 07 05.'],
+        blocks: ['По вопросам, связанным с персональными данными: support@lopestyle.uz, +998 94 272 07 05.'],
       },
     ],
   },
@@ -265,7 +265,7 @@ export const PRIVACY: LegalDocuments = {
         title: '4. Legal basis',
         blocks: [
           'By sending the contact form you consent to the processing of your data for the purposes described in this Policy. Technical data is processed because it is necessary to run and protect the Site.',
-          'You can withdraw your consent at any time by writing to hello@lope.uz. Withdrawal does not affect processing carried out before it.',
+          'You can withdraw your consent at any time by writing to support@lopestyle.uz. Withdrawal does not affect processing carried out before it.',
         ],
       },
       {
@@ -309,7 +309,7 @@ export const PRIVACY: LegalDocuments = {
               'complain to the competent state authority or to a court if you believe your rights have been violated.',
             ],
           },
-          'Send requests to hello@lope.uz. We will reply within the time limits set by law.',
+          'Send requests to support@lopestyle.uz. We will reply within the time limits set by law.',
         ],
       },
       {
@@ -322,7 +322,7 @@ export const PRIVACY: LegalDocuments = {
       {
         id: 'contact',
         title: '10. Contact',
-        blocks: ['For questions about personal data: hello@lope.uz, +998 94 272 07 05.'],
+        blocks: ['For questions about personal data: support@lopestyle.uz, +998 94 272 07 05.'],
       },
     ],
   },

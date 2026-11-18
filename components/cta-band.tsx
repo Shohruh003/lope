@@ -4,7 +4,7 @@ import { Aurora } from './aurora';
 import { ArrowRightIcon, MailIcon } from './icons';
 import { reveal } from './motion/motion-props';
 
-const EMAIL = 'hello@lope.uz';
+const EMAIL = 'support@lopestyle.uz';
 
 /// Closing call-to-action panel. Reuses the existing contact copy
 /// (title + subtitle) so no new marketing text is introduced.

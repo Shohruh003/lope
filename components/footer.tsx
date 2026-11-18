@@ -6,9 +6,11 @@ import { ArrowUpIcon, InstagramIcon, TelegramIcon } from './icons';
 import { reveal } from './motion/motion-props';
 import {
   COMPANY_EMAIL,
+  COMPANY_INSTAGRAM,
   COMPANY_LEGAL_ADDRESS,
   COMPANY_PHONE,
   COMPANY_PHONE_RAW,
+  COMPANY_TELEGRAM,
   COMPANY_TIN,
 } from '@/lib/company';
 
@@ -43,10 +45,10 @@ export function Footer() {
             </Link>
             <p className="mt-4 max-w-xs text-sm text-[color:var(--fg-soft)]">{t('tagline')}</p>
             <div className="mt-6 flex gap-2">
-              <SocialLink href="https://instagram.com/lope.uz" label="Instagram">
+              <SocialLink href={COMPANY_INSTAGRAM} label="Instagram">
                 <InstagramIcon size={16} />
               </SocialLink>
-              <SocialLink href="https://t.me/lopeuz" label="Telegram">
+              <SocialLink href={COMPANY_TELEGRAM} label="Telegram">
                 <TelegramIcon size={16} />
               </SocialLink>
             </div>
