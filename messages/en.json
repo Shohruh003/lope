@@ -151,7 +151,13 @@
       "privacy": "Privacy policy",
       "terms": "Terms of use"
     },
-    "copyright": "© 2026 Lope. All rights reserved."
+    "copyright": "© 2026 \"LOPE\" LLC. All rights reserved.",
+    "legal": {
+      "name": "\"LOPE\" Limited Liability Company",
+      "tin": "TIN",
+      "address": "Legal address",
+      "phone": "Phone"
+    }
   },
   "language": "Language",
   "common": {

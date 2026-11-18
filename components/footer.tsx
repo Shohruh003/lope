@@ -2,6 +2,23 @@ import { Link } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import { BrandMark } from './brand-mark';
 
+// Seller identification for "LOPE" MChJ: e-commerce rules, the payment
+// providers (Payme, CLICK) and Meta business verification expect the legal
+// name, STIR and legal address on the company's website. STIR is public
+// registry data. The address is a legal identifier, so it is not translated.
+const COMPANY_TIN = '313294861';
+const COMPANY_LEGAL_ADDRESS =
+  "Namangan viloyati, Namangan tumani, Beshkapa MFY, Paxtaobod ko'chasi, 326-uy";
+const COMPANY_PHONE = '+998 94 272 07 05';
+const COMPANY_PHONE_RAW = '+998942720705';
+const COMPANY_EMAIL = 'hello@lope.uz';
+
+// The Privacy Policy and Terms of Use of "LOPE" MChJ are published on
+// lopestyle.uz; lope.uz has no pages of its own for them (the old relative
+// /privacy and /terms links returned 404).
+const PRIVACY_URL = 'https://lopestyle.uz/privacy';
+const TERMS_URL = 'https://lopestyle.uz/terms';
+
 /// Site footer with 4 columns on desktop, stacked on mobile.
 /// Brand column (mark + tagline + socials) plus 3 link groups
 /// (Company, Products, Legal).
@@ -52,12 +69,33 @@ export function Footer() {
 
           {/* Legal */}
           <FooterColumn title={t('sections.legal')}>
-            <FooterLink href="/privacy">{t('links.privacy')}</FooterLink>
-            <FooterLink href="/terms">{t('links.terms')}</FooterLink>
+            <ExternalFooterLink href={PRIVACY_URL}>{t('links.privacy')}</ExternalFooterLink>
+            <ExternalFooterLink href={TERMS_URL}>{t('links.terms')}</ExternalFooterLink>
           </FooterColumn>
         </div>
 
-        <div className="mt-16 pt-8 border-t border-[color:var(--border)] flex flex-col sm:flex-row justify-between gap-3 text-xs text-[color:var(--fg-muted)]">
+        <div className="mt-16 pt-8 border-t border-[color:var(--border)] text-xs leading-relaxed text-[color:var(--fg-muted)]">
+          <p>
+            <span className="font-medium text-[color:var(--fg-soft)]">{t('legal.name')}</span>
+            {' · '}
+            {t('legal.tin')}: {COMPANY_TIN}
+          </p>
+          <p className="mt-1">
+            {t('legal.address')}: {COMPANY_LEGAL_ADDRESS}
+          </p>
+          <p className="mt-1">
+            {t('legal.phone')}{' '}
+            <a href={`tel:${COMPANY_PHONE_RAW}`} className="hover:text-[color:var(--fg)] transition-colors">
+              {COMPANY_PHONE}
+            </a>
+            {' · '}
+            <a href={`mailto:${COMPANY_EMAIL}`} className="hover:text-[color:var(--fg)] transition-colors">
+              {COMPANY_EMAIL}
+            </a>
+          </p>
+        </div>
+
+        <div className="mt-6 flex flex-col sm:flex-row justify-between gap-3 text-xs text-[color:var(--fg-muted)]">
           <span>{t('copyright')}</span>
           <span className="tracking-wider uppercase">Made in Uzbekistan</span>
         </div>
@@ -100,6 +138,27 @@ function FooterLink({
       >
         {children}
       </HrefLink>
+    </li>
+  );
+}
+
+function ExternalFooterLink({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <li>
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-sm text-[color:var(--fg-soft)] hover:text-[color:var(--fg)] transition-colors"
+      >
+        {children}
+      </a>
     </li>
   );
 }
