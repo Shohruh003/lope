@@ -8,7 +8,7 @@ import { BrandMark } from './brand-mark';
 // registry data. The address is a legal identifier, so it is not translated.
 const COMPANY_TIN = '313294861';
 const COMPANY_LEGAL_ADDRESS =
-  "Namangan viloyati, Namangan tumani, Beshkapa MFY, Paxtaobod ko'chasi, 326-uy";
+  "Namangan viloyati, Namangan tumani, Nurafshon, Beshkapa MFY, Paxtaobod ko'chasi, 326-uy";
 const COMPANY_PHONE = '+998 94 272 07 05';
 const COMPANY_PHONE_RAW = '+998942720705';
 const COMPANY_EMAIL = 'hello@lope.uz';
