@@ -2,27 +2,17 @@ import { Link } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import { Logo } from './brand-mark';
 import { FlagUz } from './flags';
-import { ArrowUpIcon, ExternalIcon, InstagramIcon, TelegramIcon } from './icons';
+import { ArrowUpIcon, InstagramIcon, TelegramIcon } from './icons';
 import { reveal } from './motion/motion-props';
+import {
+  COMPANY_EMAIL,
+  COMPANY_LEGAL_ADDRESS,
+  COMPANY_PHONE,
+  COMPANY_PHONE_RAW,
+  COMPANY_TIN,
+} from '@/lib/company';
 
-// Seller identification for "LOPE" MChJ: e-commerce rules, the payment
-// providers (Payme, CLICK) and Meta business verification expect the legal
-// name, STIR and legal address on the company's website. STIR is public
-// registry data. The address is a legal identifier, so it is not translated.
-const COMPANY_TIN = '313294861';
-const COMPANY_LEGAL_ADDRESS =
-  "Namangan viloyati, Namangan tumani, Nurafshon, Beshkapa MFY, Paxtaobod ko'chasi, 326-uy";
-const COMPANY_PHONE = '+998 94 272 07 05';
-const COMPANY_PHONE_RAW = '+998942720705';
-const COMPANY_EMAIL = 'hello@lope.uz';
-
-// The Privacy Policy and Terms of Use of "LOPE" MChJ are published on
-// lopestyle.uz; lope.uz has no pages of its own for them (the old relative
-// /privacy and /terms links returned 404).
-const PRIVACY_URL = 'https://lopestyle.uz/privacy';
-const TERMS_URL = 'https://lopestyle.uz/terms';
-
-type InternalHref = '/about' | '/contact' | '/style' | '/store';
+type InternalHref = '/about' | '/contact' | '/style' | '/store' | '/privacy' | '/terms';
 
 /// Site footer: brand column (mark + tagline + socials) and 3 link groups
 /// (Company, Products, Legal), then the company's legal details panel,
@@ -76,8 +66,8 @@ export function Footer() {
 
           {/* Legal */}
           <FooterColumn title={t('sections.legal')} className="col-span-2 sm:col-span-1 lg:col-span-3">
-            <ExternalFooterLink href={PRIVACY_URL}>{t('links.privacy')}</ExternalFooterLink>
-            <ExternalFooterLink href={TERMS_URL}>{t('links.terms')}</ExternalFooterLink>
+            <FooterLink href="/privacy">{t('links.privacy')}</FooterLink>
+            <FooterLink href="/terms">{t('links.terms')}</FooterLink>
           </FooterColumn>
         </div>
 
@@ -177,31 +167,6 @@ function FooterLink({ href, children }: { href: InternalHref; children: React.Re
         <span className="h-px w-0 bg-[color:var(--accent-ink)] transition-all duration-300 group-hover:w-3" aria-hidden="true" />
         {children}
       </Link>
-    </li>
-  );
-}
-
-function ExternalFooterLink({
-  href,
-  children,
-}: {
-  href: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <li>
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="group inline-flex items-center gap-1.5 text-sm text-[color:var(--fg-soft)] transition-colors hover:text-[color:var(--fg)]"
-      >
-        {children}
-        <ExternalIcon
-          size={13}
-          className="opacity-50 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:opacity-100"
-        />
-      </a>
     </li>
   );
 }

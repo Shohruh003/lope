@@ -135,7 +135,8 @@
       "message": "Xabaringiz",
       "submit": "Yuborish",
       "success": "Xabaringiz yuborildi. Tez orada javob beramiz.",
-      "error": "Xatolik yuz berdi. Qaytadan urinib ko'ring."
+      "error": "Xatolik yuz berdi. Qaytadan urinib ko'ring.",
+      "consent": "Formani yuborish orqali siz shaxsiy ma'lumotlaringiz <link>Maxfiylik siyosati</link>ga muvofiq qayta ishlanishiga rozilik bildirasiz."
     },
     "labels": {
       "email": "Email",
@@ -230,5 +231,11 @@
       "title": "Hamkor bo'lmoqchimisiz?",
       "body": "Hamkorlik takliflari bilan biz bilan bog'laning."
     }
+  },
+  "legal": {
+    "eyebrow": "Huquqiy ma'lumot",
+    "updated": "Oxirgi yangilanish",
+    "contents": "Mundarija",
+    "related": "Shuningdek o'qing"
   }
 }

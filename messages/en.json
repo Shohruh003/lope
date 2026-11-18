@@ -135,7 +135,8 @@
       "message": "Your message",
       "submit": "Send",
       "success": "Your message has been sent. We'll get back to you soon.",
-      "error": "Something went wrong. Please try again."
+      "error": "Something went wrong. Please try again.",
+      "consent": "By sending this form, you agree to the processing of your personal data as described in our <link>Privacy Policy</link>."
     },
     "labels": {
       "email": "Email",
@@ -230,5 +231,11 @@
       "title": "Want to partner with us?",
       "body": "Get in touch with a partnership proposal."
     }
+  },
+  "legal": {
+    "eyebrow": "Legal",
+    "updated": "Last updated",
+    "contents": "Contents",
+    "related": "See also"
   }
 }

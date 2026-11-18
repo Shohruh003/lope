@@ -2,6 +2,7 @@
 
 import { useState, type ReactNode } from 'react';
 import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 import { SectionHeading } from './section-heading';
 import { Aurora } from './aurora';
 import { ArrowRightIcon, CheckIcon, MailIcon, PhoneIcon, PinIcon } from './icons';
@@ -184,6 +185,21 @@ export function ContactSection() {
                 )}
               </p>
             </div>
+
+            {/* Consent notice: sending the form is consent to processing
+                under the Privacy Policy (Law ZRU-547). */}
+            <p className="text-xs leading-relaxed text-[color:var(--fg-muted)]">
+              {tForm.rich('consent', {
+                link: (chunks) => (
+                  <Link
+                    href="/privacy"
+                    className="underline decoration-[color:var(--border-strong)] underline-offset-4 transition-colors hover:text-[color:var(--fg)] hover:decoration-[color:var(--accent-ink)]"
+                  >
+                    {chunks}
+                  </Link>
+                ),
+              })}
+            </p>
           </form>
         </div>
       </div>

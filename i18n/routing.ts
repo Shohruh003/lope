@@ -15,6 +15,10 @@ export const routing = defineRouting({
   // Accept-Language. Auto-detection would flip the primary market to
   // English/Russian for anyone whose browser advertises a non-uz locale.
   localeDetection: false,
+  // No NEXT_LOCALE cookie. It only feeds locale detection, which is off,
+  // and without it the site sets no cookies at all (as the Privacy Policy
+  // at /privacy states).
+  localeCookie: false,
 });
 
 export type Locale = (typeof routing.locales)[number];

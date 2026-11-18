@@ -2,7 +2,8 @@ import type { MetadataRoute } from 'next';
 import { routing } from '@/i18n/routing';
 
 const SITE = 'https://lope.uz';
-const PATHS = ['', '/about', '/projects', '/style', '/store', '/contact'] as const;
+const PATHS = ['', '/about', '/projects', '/style', '/store', '/contact', '/privacy', '/terms'] as const;
+const LEGAL_PATHS: ReadonlySet<string> = new Set(['/privacy', '/terms']);
 
 /// Build a full sitemap that covers every path in every locale, plus
 /// hreflang alternates so Google shows the right language to each user.
@@ -27,8 +28,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       return {
         url,
         lastModified: now,
-        changeFrequency: 'monthly' as const,
-        priority: path === '' ? 1.0 : 0.7,
+        changeFrequency: LEGAL_PATHS.has(path) ? ('yearly' as const) : ('monthly' as const),
+        priority: path === '' ? 1.0 : LEGAL_PATHS.has(path) ? 0.3 : 0.7,
         alternates: { languages },
       };
     })
