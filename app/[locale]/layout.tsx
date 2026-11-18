@@ -1,6 +1,7 @@
+import '../fonts.css';
 import '../globals.css';
 
-import { Inter, Space_Grotesk } from 'next/font/google';
+import { preload } from 'react-dom';
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -12,21 +13,18 @@ import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { buildAlternates, organizationJsonLd, websiteJsonLd, SITE_URL, SITE_NAME } from '@/lib/seo';
 
-// Body copy — modern grotesque with excellent Cyrillic + Latin
-// coverage so uz/ru/en all share one weightful family.
-const bodyFont = Inter({
-  subsets: ['latin', 'cyrillic', 'latin-ext'],
-  variable: '--font-sans',
-  display: 'swap',
-});
-
-// Display face for hero + section titles. Bolder, tighter tracking.
-const displayFont = Space_Grotesk({
-  subsets: ['latin', 'latin-ext'],
-  variable: '--font-display',
-  display: 'swap',
-  weight: ['400', '500', '600', '700'],
-});
+// Fonts: Inter for body copy (Latin + Cyrillic, so uz/ru/en share one
+// family) and Space Grotesk for display titles. They are self-hosted:
+// @font-face rules in app/fonts.css, files in public/fonts. Preload what
+// the first screen needs: the Latin files of both families on every
+// page, plus Inter's Cyrillic file on the Russian pages.
+function preloadFonts(locale: string) {
+  const files = ['/fonts/inter-v20-latin.woff2', '/fonts/space-grotesk-v22-latin.woff2'];
+  if (locale === 'ru') files.push('/fonts/inter-v20-cyrillic.woff2');
+  for (const href of files) {
+    preload(href, { as: 'font', type: 'font/woff2', crossOrigin: 'anonymous' });
+  }
+}
 
 // Generate static params for each locale so Next builds all three
 // language versions at build time (fast first paint on Netlify).
@@ -121,12 +119,13 @@ export default async function LocaleLayout({
   // Enable static rendering for this locale — required when using
   // generateStaticParams + next-intl.
   setRequestLocale(locale);
+  preloadFonts(locale);
   const messages = await getMessages();
 
   return (
     <html
       lang={locale}
-      className={`${bodyFont.variable} ${displayFont.variable} antialiased`}
+      className="antialiased"
       suppressHydrationWarning
     >
       <body className="min-h-screen flex flex-col bg-[color:var(--bg)] text-[color:var(--fg)]">
